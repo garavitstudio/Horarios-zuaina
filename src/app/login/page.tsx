@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
@@ -11,23 +11,39 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("error")) {
+        setError("Usuario o contraseña incorrectos. Inténtalo de nuevo.");
+      }
+    }
+  }, []);
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
     setLoading(true);
 
-    const result = await signIn("credentials", {
-      username,
-      password,
-      redirect: false,
-    });
+    try {
+      const result = await signIn("credentials", {
+        username,
+        password,
+        redirect: false,
+      });
 
-    setLoading(false);
+      setLoading(false);
 
-    if (result?.ok) {
-      router.push("/");
-      router.refresh();
-    } else {
+      if (result?.error) {
+        setError("Usuario o contraseña incorrectos. Inténtalo de nuevo.");
+      } else if (result?.ok) {
+        router.push("/");
+        router.refresh();
+      } else {
+        // Redirección forzada por NextAuth
+      }
+    } catch (err) {
+      setLoading(false);
       setError("Usuario o contraseña incorrectos. Inténtalo de nuevo.");
     }
   }
