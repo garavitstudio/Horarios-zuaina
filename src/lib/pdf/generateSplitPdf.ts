@@ -8,6 +8,8 @@ import {
 } from "pdf-lib";
 import { DayEntry, formatHours, lastDayOfMonthES } from "@/lib/schedule";
 import { MONTH_NAMES_ES } from "@/types";
+import fs from "fs";
+import path from "path";
 
 const COLOR = {
   purple:      rgb(0.478, 0.247, 0.627),
@@ -215,6 +217,39 @@ export async function generateSplitPdf(
 
   drawHeader(page, boldFont, regularFont, workerName, position, year, month);
 
+  // Intentar cargar logo para esquina superior derecha
+  try {
+    const logoPaths = [
+      path.join(process.cwd(), "public", "logo.png"),
+      path.join(process.cwd(), "public", "logo.jpg"),
+    ];
+    
+    let logoBytes = null;
+    let isPng = true;
+    for (const lp of logoPaths) {
+      if (fs.existsSync(lp)) {
+        logoBytes = fs.readFileSync(lp);
+        isPng = lp.endsWith(".png");
+        break;
+      }
+    }
+
+    if (logoBytes) {
+      const logoImage = isPng ? await doc.embedPng(logoBytes) : await doc.embedJpg(logoBytes);
+      const targetHeight = 44; // El header mide 56 de alto, dejamos márgenes
+      const targetWidth = (logoImage.width / logoImage.height) * targetHeight;
+      
+      page.drawImage(logoImage, {
+        x: PAGE_W - targetWidth - MARGIN,
+        y: PAGE_H - 56 + (56 - targetHeight) / 2,
+        width: targetWidth,
+        height: targetHeight,
+      });
+    }
+  } catch (error) {
+    console.log("No se pudo incrustar el logo:", error);
+  }
+
   const ROW_H = 12;
   const tableStart = PAGE_H - 162;
   drawTableHeaderSplit(page, boldFont, tableStart);
@@ -227,7 +262,7 @@ export async function generateSplitPdf(
 
   page.drawLine({ start: { x: MARGIN, y: yRow + ROW_H }, end: { x: PAGE_W - MARGIN, y: yRow + ROW_H }, thickness: 0.5, color: COLOR.gray });
 
-  drawFooter(page, regularFont, boldFont, workerName, year, month, totalHours, yRow + ROW_H - 10);
+  drawFooter(page, regularFont, boldFont, workerName, year, month, totalHours, yRow - 10);
 
   return doc.save();
 }
