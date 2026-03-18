@@ -7,12 +7,12 @@ export default auth((req: NextRequest & { auth: unknown }) => {
   const pathname = req.nextUrl.pathname;
   console.log("MIDDLEWARE URL:", req.nextUrl.clone().href, "PATHNAME:", pathname);
 
-  const basePath = "/app_horarios";
-  const publicPaths = [`${basePath}/login`, `${basePath}/api/auth`];
+  // Rutas públicas
+  const publicPaths = ["/login", "/api/auth"];
   const isPublic = publicPaths.some((p) => pathname.startsWith(p));
 
   if (!isLoggedIn && !isPublic) {
-    const loginUrl = new URL(`${basePath}/login`, req.nextUrl.origin);
+    const loginUrl = new URL("/login", req.nextUrl.origin);
     loginUrl.searchParams.set("callbackUrl", pathname);
     return NextResponse.redirect(loginUrl);
   }

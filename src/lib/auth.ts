@@ -36,8 +36,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
   pages: {
-    signIn: "/app_horarios/login",
-    error: "/app_horarios/login",
+    signIn: "/login",
+    error: "/login",
   },
   session: {
     strategy: "jwt",

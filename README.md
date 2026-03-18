@@ -93,7 +93,7 @@ La app estará disponible en: http://localhost:3000
 | `AUTH_USERNAME` | Usuario de acceso | `zuaina` |
 | `AUTH_PASSWORD` | Contraseña de acceso | `Horarioszuaina` |
 | `NEXTAUTH_SECRET` | Secreto para JWT (mín. 32 caracteres) | `openssl rand -base64 32` |
-| `NEXTAUTH_URL` | URL pública de la app | `https://lavidaeszuaina.es/app_horarios` |
+| `NEXTAUTH_URL` | URL pública de la app | `https://apphorarios.lavidaeszuaina.es` |
 
 ---
 
@@ -129,35 +129,20 @@ DATABASE_URL=postgresql://...
 AUTH_USERNAME=zuaina
 AUTH_PASSWORD=Horarioszuaina
 NEXTAUTH_SECRET=<genera_uno_con_openssl>
-NEXTAUTH_URL=https://lavidaeszuaina.es/app_horarios
+NEXTAUTH_URL=https://apphorarios.lavidaeszuaina.es
 ```
 
 4. Pulsa **Deploy**
 
-### Paso 4: Ejecutar migraciones en producción
+### Paso 4: Configurar el dominio personalizado
 
-Después del primer despliegue, ejecuta las migraciones desde tu máquina local apuntando a la base de datos de producción:
-
-```bash
-DATABASE_URL="postgresql://..." npx prisma migrate deploy
-```
-
-Y el seed inicial (opcional, pero recomendado):
-
-```bash
-DATABASE_URL="postgresql://..." npm run db:seed
-```
-
-### Paso 5: Configurar el dominio personalizado
-
-Para que la app funcione bajo **lavidaeszuaina.es/app_horarios**:
+Para que la app funcione sin complicaciones en un subdominio:
 
 1. En el panel de Vercel, ve a **Settings → Domains**
-2. Añade `lavidaeszuaina.es`
-3. En el proveedor de DNS del dominio, añade los registros que Vercel indique
+2. Añade tu subdominio `apphorarios.lavidaeszuaina.es` (o el de Vercel predeterminado).
+3. Asegúrate que en Environment Variables pongas: `NEXTAUTH_URL=https://apphorarios.lavidaeszuaina.es`
 
-> **Nota técnica**: La app usa `basePath: "/app_horarios"` en `next.config.ts`.
-> Si prefieres usar un subdominio (`app.lavidaeszuaina.es`), elimina esa línea del config y cambia `NEXTAUTH_URL` al subdominio correspondiente. Los subdominios son más sencillos de configurar y evitan posibles conflictos si la web principal ya usa ese dominio.
+> **¡Listo!** En esta versión he automatizado el despliegue de Base de datos. Cada vez que construyas el proyecto en Vercel, el servidor ejecutará automáticamente las migraciones y añadirá los datos iniciales (Trabajadores e Islas) sin que tú toques una sola línea de comando.
 
 ---
 
