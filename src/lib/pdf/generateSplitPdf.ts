@@ -110,10 +110,10 @@ const COL = {
 };
 
 function drawTableHeaderSplit(page: PDFPage, boldFont: PDFFont, y: number) {
-  const rowH = 22;
+  const rowH = 26;
   drawRect(page, MARGIN, y, PAGE_W - 2 * MARGIN, rowH, COLOR.purple);
 
-  const fs = 6.5;
+  const fs = 7.5;
   const c = COLOR.white;
 
   const allCols = Object.values(COL);
@@ -123,22 +123,22 @@ function drawTableHeaderSplit(page: PDFPage, boldFont: PDFFont, y: number) {
   page.drawLine({ start: { x: PAGE_W - MARGIN, y }, end: { x: PAGE_W - MARGIN, y: y + rowH }, thickness: 0.3, color: COLOR.gray });
 
   // Fila 1 de cabecera
-  drawText(page, "Fecha",           COL.fecha.x + 2,  y + 13, boldFont, fs, c);
-  drawText(page, "Día",             COL.dia.x + 2,    y + 13, boldFont, fs, c);
-  drawText(page, "Entrada",         COL.ent1.x + 2,   y + 13, boldFont, fs, c);
-  drawText(page, "Salida",          COL.sal1.x + 2,   y + 13, boldFont, fs, c);
-  drawText(page, "Firma",           COL.firma1.x + 2, y + 13, boldFont, fs, c);
-  drawText(page, "Entrada",         COL.ent2.x + 2,   y + 13, boldFont, fs, c);
-  drawText(page, "Salida",          COL.sal2.x + 2,   y + 13, boldFont, fs, c);
-  drawText(page, "Firma",           COL.firma2.x + 2, y + 13, boldFont, fs, c);
-  drawText(page, "H.Extra",         COL.extra.x + 2,  y + 13, boldFont, fs, c);
-  drawText(page, "Total",           COL.total.x + 2,  y + 13, boldFont, fs, c);
+  drawText(page, "Fecha",           COL.fecha.x + 2,  y + 15, boldFont, fs, c);
+  drawText(page, "Día",             COL.dia.x + 2,    y + 15, boldFont, fs, c);
+  drawText(page, "Entrada",         COL.ent1.x + 2,   y + 15, boldFont, fs, c);
+  drawText(page, "Salida",          COL.sal1.x + 2,   y + 15, boldFont, fs, c);
+  drawText(page, "Firma",           COL.firma1.x + 2, y + 15, boldFont, fs, c);
+  drawText(page, "Entrada",         COL.ent2.x + 2,   y + 15, boldFont, fs, c);
+  drawText(page, "Salida",          COL.sal2.x + 2,   y + 15, boldFont, fs, c);
+  drawText(page, "Firma",           COL.firma2.x + 2, y + 15, boldFont, fs, c);
+  drawText(page, "H.Extra",         COL.extra.x + 2,  y + 15, boldFont, fs, c);
+  drawText(page, "Total",           COL.total.x + 2,  y + 15, boldFont, fs, c);
   // Fila 2 de cabecera
-  drawText(page, "mañana",          COL.ent1.x + 2,   y + 4,  boldFont, fs - 0.5, COLOR.yellow);
-  drawText(page, "mañana",          COL.sal1.x + 2,   y + 4,  boldFont, fs - 0.5, COLOR.yellow);
-  drawText(page, "tarde",           COL.ent2.x + 2,   y + 4,  boldFont, fs - 0.5, COLOR.yellow);
-  drawText(page, "tarde",           COL.sal2.x + 2,   y + 4,  boldFont, fs - 0.5, COLOR.yellow);
-  drawText(page, "trabajado",       COL.total.x + 2,  y + 4,  boldFont, fs - 0.5, COLOR.yellow);
+  drawText(page, "mañana",          COL.ent1.x + 2,   y + 5,  boldFont, fs - 0.5, COLOR.yellow);
+  drawText(page, "mañana",          COL.sal1.x + 2,   y + 5,  boldFont, fs - 0.5, COLOR.yellow);
+  drawText(page, "tarde",           COL.ent2.x + 2,   y + 5,  boldFont, fs - 0.5, COLOR.yellow);
+  drawText(page, "tarde",           COL.sal2.x + 2,   y + 5,  boldFont, fs - 0.5, COLOR.yellow);
+  drawText(page, "trabajado",       COL.total.x + 2,  y + 5,  boldFont, fs - 0.5, COLOR.yellow);
 }
 
 function drawRowSplit(
@@ -158,7 +158,7 @@ function drawRowSplit(
   }
   page.drawLine({ start: { x: PAGE_W - MARGIN, y }, end: { x: PAGE_W - MARGIN, y: y + rowH }, thickness: 0.3, color: COLOR.gray });
 
-  const fs = 6.5;
+  const fs = 7.5;
   const dy = rowH / 2 - 2.5;
   const tColor = entry.isBlue ? COLOR.blueAccent : COLOR.dark;
 
@@ -250,7 +250,7 @@ export async function generateSplitPdf(
     console.log("No se pudo incrustar el logo:", error);
   }
 
-  const ROW_H = 12;
+  const ROW_H = 15.5;
   const tableStart = PAGE_H - 162;
   drawTableHeaderSplit(page, boldFont, tableStart);
 

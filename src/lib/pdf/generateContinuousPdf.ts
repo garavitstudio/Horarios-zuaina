@@ -166,24 +166,24 @@ function drawTableHeaderContinuous(
   boldFont: PDFFont,
   y: number
 ) {
-  const rowH = 16;
+  const rowH = 18;
   const cols = COL_CONTINUOUS;
 
   // Fondo morado cabecera
   drawRect(page, MARGIN, y, PAGE_W - 2 * MARGIN, rowH, COLOR.purple);
 
   const headerColor = COLOR.white;
-  const fs = 7.5;
+  const fs = 8.5;
 
   page.drawLine({ start: { x: MARGIN, y }, end: { x: PAGE_W - MARGIN, y }, thickness: 0.5, color: COLOR.gray });
 
-  drawText(page, "Fecha", cols.fecha.x + 2, y + 5, boldFont, fs, headerColor);
-  drawText(page, "Día", cols.dia.x + 2, y + 5, boldFont, fs, headerColor);
-  drawText(page, "Hora entrada", cols.entrada.x + 2, y + 5, boldFont, fs, headerColor);
-  drawText(page, "Hora salida", cols.salida.x + 2, y + 5, boldFont, fs, headerColor);
-  drawText(page, "Firma", cols.firma.x + 2, y + 5, boldFont, fs, headerColor);
-  drawText(page, "Horas extra", cols.extra.x + 2, y + 5, boldFont, fs, headerColor);
-  drawText(page, "Total trabajado", cols.total.x + 2, y + 5, boldFont, fs, headerColor);
+  drawText(page, "Fecha", cols.fecha.x + 2, y + 6, boldFont, fs, headerColor);
+  drawText(page, "Día", cols.dia.x + 2, y + 6, boldFont, fs, headerColor);
+  drawText(page, "Hora entrada", cols.entrada.x + 2, y + 6, boldFont, fs, headerColor);
+  drawText(page, "Hora salida", cols.salida.x + 2, y + 6, boldFont, fs, headerColor);
+  drawText(page, "Firma", cols.firma.x + 2, y + 6, boldFont, fs, headerColor);
+  drawText(page, "Horas extra", cols.extra.x + 2, y + 6, boldFont, fs, headerColor);
+  drawText(page, "Total trabajado", cols.total.x + 2, y + 6, boldFont, fs, headerColor);
 }
 
 function drawRowContinuous(
@@ -210,7 +210,7 @@ function drawRowContinuous(
   }
   page.drawLine({ start: { x: PAGE_W - MARGIN, y }, end: { x: PAGE_W - MARGIN, y: y + rowH }, thickness: 0.3, color: COLOR.gray });
 
-  const fs = 7;
+  const fs = 8;
   const dy = rowH / 2 - 3;
   const textColor = entry.isBlue ? COLOR.blueAccent : COLOR.dark;
 
@@ -329,7 +329,7 @@ export async function generateContinuousPdf(
   }
 
   // Tabla
-  const ROW_H = 13;
+  const ROW_H = 16.5;
   const tableStart = PAGE_H - 160;
   drawTableHeaderContinuous(page, boldFont, tableStart);
 
