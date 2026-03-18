@@ -1,4 +1,4 @@
-import { auth } from "@/lib/auth";
+import { auth, signOut } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 
@@ -67,10 +67,13 @@ export default async function HomePage() {
               <p className="text-xs mt-0.5" style={{ color: "#D6EAF7" }}>Asociación La Vida es Zuaina</p>
             </div>
           </div>
-          <form action="/api/auth/signout" method="POST">
+          <form action={async () => {
+            "use server";
+            await signOut({ redirectTo: "/login" });
+          }}>
             <button
               type="submit"
-              className="text-xs px-3 py-1.5 rounded-lg transition-colors"
+              className="text-xs px-3 py-1.5 rounded-lg transition-colors cursor-pointer hover:bg-white/20"
               style={{ background: "rgba(255,255,255,0.15)", color: "white" }}>
               Cerrar sesión
             </button>

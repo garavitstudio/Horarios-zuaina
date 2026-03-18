@@ -17,6 +17,11 @@ export default auth((req: NextRequest & { auth: unknown }) => {
     return NextResponse.redirect(loginUrl);
   }
 
+  // Si ya está logueado y va al login, lo mandamos al dashboard
+  if (isLoggedIn && pathname === "/login") {
+    return NextResponse.redirect(new URL("/", req.nextUrl.origin));
+  }
+
   return NextResponse.next();
 });
 
