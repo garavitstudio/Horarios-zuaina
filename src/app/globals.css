@@ -1,26 +1,90 @@
 @import "tailwindcss";
 
+/* ===========================
+   PALETA DE MARCA ZUAINA
+   =========================== */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --yellow: #F2EA00;
+  --dark: #1F1A24;
+  --purple: #7A3FA0;
+  --pink: #E93A8A;
+  --blue-soft: #D6EAF7;
+  --blue-accent: #18A7E0;
+  --neutral: #F5F5F5;
+  --border: #D9D9D9;
+  --white: #ffffff;
+  --purple-light: #EEE0F8;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--neutral);
+  --color-foreground: var(--dark);
+  --color-yellow: var(--yellow);
+  --color-purple: var(--purple);
+  --color-pink: var(--pink);
+  --color-blue-soft: var(--blue-soft);
+  --color-blue-accent: var(--blue-accent);
+  --color-border: var(--border);
+  --color-purple-light: var(--purple-light);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--neutral);
+  color: var(--dark);
+  font-family: 'Inter', 'Outfit', system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--neutral);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--purple);
+}
+
+/* Focus visible accesible */
+:focus-visible {
+  outline: 2px solid var(--purple);
+  outline-offset: 2px;
+}
+
+/* Animaciones suaves */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out both;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease-out both;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
 }

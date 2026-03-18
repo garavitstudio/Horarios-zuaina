@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Worker {
+  id           String        @id @default(cuid())
+  name         String
+  position     String
+  scheduleType ScheduleType  @default(CONTINUOUS)
+  weeklyHours  Float
+  startDate    DateTime?
+  active       Boolean       @default(true)
+  notes        String?
+  daySchedules DaySchedule[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+// dayOfWeek: 0=Lunes, 1=Martes, 2=Miércoles, 3=Jueves, 4=Viernes, 5=Sábado, 6=Domingo
+model DaySchedule {
+  id        String  @id @default(cuid())
+  worker    Worker  @relation(fields: [workerId], references: [id], onDelete: Cascade)
+  workerId  String
+  dayOfWeek Int
+  works     Boolean @default(false)
+  start1    String? // e.g. "09:00"
+  end1      String? // e.g. "14:00"
+  start2    String? // e.g. "16:00" (solo jornada partida)
+  end2      String? // e.g. "18:00"
+
+  @@unique([workerId, dayOfWeek])
+}
+
+model Holiday {
+  id   String   @id @default(cuid())
+  date DateTime @db.Date
+  name String
+  year Int
+
+  @@unique([date, year])
+  @@index([year])
+}
+
+enum ScheduleType {
+  CONTINUOUS
+  SPLIT
+}
